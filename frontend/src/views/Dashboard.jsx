@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSCADAStore } from '../store/useSCADAStore';
 import { 
   Thermometer, 
@@ -21,35 +21,54 @@ import {
   Bar, 
   Legend 
 } from 'recharts';
-import gsap from 'gsap';
+// GSAP animations removed to prevent repeated visual reflows
 
 export default function Dashboard() {
   const { kpis, zoneStats, sensorComparison, fetchInitialData, loading } = useSCADAStore();
 
   useEffect(() => {
     fetchInitialData();
-    
-    // Auto refresh telemetry every 10 seconds (SCADA simulation!)
-    const interval = setInterval(() => {
-      fetchInitialData();
-    }, 10000);
 
-    return () => clearInterval(interval);
+    // Auto refresh telemetry every 10 seconds (SCADA simulation!)
+    // Only poll when the page is visible to avoid perceived "refreshes" when tab is hidden
+    let intervalId = null;
+
+    const startPolling = () => {
+      if (intervalId) return;
+      intervalId = setInterval(() => {
+        if (typeof document === 'undefined' || document.visibilityState === 'visible') {
+          fetchInitialData();
+        }
+      }, 10000);
+    };
+
+    const stopPolling = () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+        intervalId = null;
+      }
+    };
+
+    const handleVisibility = () => {
+      if (document.visibilityState === 'visible') startPolling();
+      else stopPolling();
+    };
+
+    if (typeof document !== 'undefined') {
+      if (document.visibilityState === 'visible') startPolling();
+      document.addEventListener('visibilitychange', handleVisibility);
+    } else {
+      // fallback if document not available
+      startPolling();
+    }
+
+    return () => {
+      stopPolling();
+      if (typeof document !== 'undefined') document.removeEventListener('visibilitychange', handleVisibility);
+    };
   }, []);
 
-  // GSAP animations on initial render
-  useEffect(() => {
-    if (!loading) {
-      gsap.fromTo(".dashboard-kpi", 
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, ease: "power2.out" }
-      );
-      gsap.fromTo(".dashboard-chart", 
-        { opacity: 0, scale: 0.98 },
-        { opacity: 1, scale: 1, duration: 0.6, delay: 0.3, ease: "power2.out" }
-      );
-    }
-  }, [loading]);
+  // Animaciones GSAP eliminadas — el render ahora es estático y sin efectos.
 
   const kpiData = [
     { name: 'Registros Totales', value: kpis.total_readings, icon: Database, color: 'text-cyber-secondary', bg: 'bg-cyber-secondary/10', border: 'border-cyber-secondary/20' },
@@ -72,7 +91,7 @@ export default function Dashboard() {
         </div>
         <div className="flex gap-2">
           <span className="flex items-center gap-1.5 px-3 py-1 bg-cyber-primary/10 border border-cyber-primary/30 text-cyber-primary text-xs font-mono rounded-lg">
-            <span className="w-1.5 h-1.5 rounded-full bg-cyber-primary animate-ping"></span>
+            <span className="w-1.5 h-1.5 rounded-full bg-cyber-primary animate-ping-once"></span>
             Telemetry Stream: Active
           </span>
         </div>

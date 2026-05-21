@@ -43,7 +43,7 @@ export default function Layout({ children }) {
         <div>
           {/* Logo Brand */}
           <div className="p-6 border-b border-cyber-800/80 flex items-center gap-3">
-            <div className="p-2 rounded-lg bg-cyber-primary/10 border border-cyber-primary/20 text-cyber-primary animate-pulse-fast">
+            <div className="p-2 rounded-lg bg-cyber-primary/10 border border-cyber-primary/20 text-cyber-primary animate-pulse-fast-once">
               <Cpu size={24} />
             </div>
             <div>
@@ -84,7 +84,7 @@ export default function Layout({ children }) {
           <div className="glass-card p-3 flex flex-col gap-2">
             <div className="flex items-center justify-between text-xs font-mono text-slate-400">
               <span className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-cyber-primary animate-ping"></span>
+                <span className="w-2 h-2 rounded-full bg-cyber-primary animate-ping-once"></span>
                 ONLINE
               </span>
               <span className="text-[10px] bg-cyber-800 px-1.5 py-0.5 rounded text-cyan-400">
@@ -110,7 +110,7 @@ export default function Layout({ children }) {
         {/* Navbar */}
         <header className="h-16 bg-cyber-900/40 border-b border-cyber-800/50 flex items-center justify-between px-8 backdrop-blur-md z-10">
           <div className="flex items-center gap-3">
-            <Activity size={16} className="text-cyber-primary animate-pulse" />
+            <Activity size={16} className="text-cyber-primary animate-pulse-once" />
             <h2 className="text-sm font-mono tracking-wider text-slate-400 uppercase">
               Control & Supervision Room
             </h2>

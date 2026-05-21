@@ -24,7 +24,7 @@ import {
   Tooltip, 
   Legend 
 } from 'recharts';
-import gsap from 'gsap';
+// GSAP removed to prevent result-row animations
 
 export default function SQLPlayground() {
   const { 
@@ -187,15 +187,7 @@ export default function SQLPlayground() {
     }
   ];
 
-  // GSAP animation on results load
-  useEffect(() => {
-    if (queryResult && activeTab === 'results') {
-      gsap.fromTo(".result-row", 
-        { opacity: 0, y: 10 },
-        { opacity: 1, y: 0, duration: 0.3, stagger: 0.03, ease: "power2.out" }
-      );
-    }
-  }, [queryResult, activeTab]);
+  // Animación de filas de resultados deshabilitada para evitar parpadeos.
 
   const handleQuerySelect = (querySql) => {
     setSqlQuery(querySql);
@@ -380,7 +372,7 @@ export default function SQLPlayground() {
                 disabled={queryLoading}
                 className="flex items-center gap-1.5 px-3 py-1 bg-cyber-primary/10 border border-cyber-primary/30 text-cyber-primary hover:bg-cyber-primary/20 transition-all font-mono text-[10px] font-bold rounded-lg cursor-pointer shadow shadow-cyber-primary/5"
               >
-                <Play size={10} className={queryLoading ? 'animate-pulse' : ''} />
+                <Play size={10} className={queryLoading ? 'animate-pulse-once' : ''} />
                 {queryLoading ? 'EJECUTANDO...' : 'RUN QUERY'}
               </button>
             </div>

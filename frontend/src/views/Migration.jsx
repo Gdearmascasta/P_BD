@@ -132,7 +132,7 @@ export default function Migration() {
                 }`}>
                   <div className="flex items-center justify-between mb-3">
                     <span className="text-[10px] uppercase font-bold tracking-widest text-slate-400">FASE 0{idx + 1}</span>
-                    {status === 'active' && <span className="w-2 h-2 rounded-full bg-cyber-primary animate-ping"></span>}
+                    {status === 'active' && <span className="w-2 h-2 rounded-full bg-cyber-primary animate-ping-once"></span>}
                     {status === 'success' && <CheckCircle2 size={14} className="text-emerald-400" />}
                     {status === 'idle' && <Hourglass size={12} className="text-slate-500" />}
                   </div>
@@ -145,7 +145,7 @@ export default function Migration() {
                         ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
                         : 'bg-cyber-800/40 border-cyber-800'
                     }`}>
-                      <Icon size={18} className={status === 'active' ? 'animate-pulse' : ''} />
+                      <Icon size={18} className={status === 'active' ? 'animate-pulse-once' : ''} />
                     </div>
                     <div>
                       <h4 className={`text-xs font-bold ${status === 'active' ? 'text-cyber-primary' : status === 'success' ? 'text-emerald-400' : 'text-slate-300'}`}>
@@ -160,7 +160,7 @@ export default function Migration() {
                 {/* Arrow Connector (Only between cards) */}
                 {idx < 2 && (
                   <div className="col-span-1 lg:col-span-1 flex justify-center py-2 lg:py-0 text-slate-600">
-                    <ArrowRight size={24} className={`hidden lg:block ${migrationLoading ? 'text-cyber-primary animate-pulse' : ''}`} />
+                    <ArrowRight size={24} className={`hidden lg:block ${migrationLoading ? 'text-cyber-primary animate-pulse-once' : ''}`} />
                     <span className="lg:hidden text-xs font-mono font-bold tracking-widest">↓ ENLACE DE DATOS ↓</span>
                   </div>
                 )}
@@ -230,7 +230,7 @@ export default function Migration() {
         {/* Terminal Header */}
         <div className="bg-cyber-950 px-5 py-3 border-b border-cyber-800 flex justify-between items-center select-none">
           <div className="flex items-center gap-2">
-            <TermIcon size={14} className="text-cyber-primary animate-pulse" />
+            <TermIcon size={14} className="text-cyber-primary animate-pulse-once" />
             <span className="font-mono text-xs font-bold text-slate-300">ETL Pipeline Audit Console logs</span>
           </div>
           

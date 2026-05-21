@@ -1,22 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Network, ArrowRight, ShieldCheck, HelpCircle } from 'lucide-react';
-import gsap from 'gsap';
+// GSAP removed to eliminate repeated animations
 
 export default function Normalization() {
   const [activeStep, setActiveStep] = useState(0);
 
-  useEffect(() => {
-    // GSAP stagger animations when tab changes
-    gsap.fromTo(".step-content-card", 
-      { opacity: 0, x: -30 }, 
-      { opacity: 1, x: 0, duration: 0.5, ease: "power2.out" }
-    );
-    
-    gsap.fromTo(".transform-element", 
-      { opacity: 0, scale: 0.9 }, 
-      { opacity: 1, scale: 1, duration: 0.4, stagger: 0.08, ease: "back.out(1.2)", delay: 0.2 }
-    );
-  }, [activeStep]);
+  // Animaciones GSAP eliminadas; la transición de pasos es estática.
 
   const steps = [
     {
@@ -150,8 +139,8 @@ export default function Normalization() {
             {steps[activeStep].tables.map((table, tIdx) => (
               <div key={tIdx} className="transform-element bg-cyber-900 border border-cyber-800 rounded-xl overflow-hidden min-w-[280px] shadow-lg max-w-md">
                 {/* Table Title */}
-                <div className="bg-cyber-850 px-4 py-2 border-b border-cyber-800 flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-cyber-secondary animate-pulse"></span>
+                  <div className="bg-cyber-850 px-4 py-2 border-b border-cyber-800 flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-cyber-secondary animate-pulse-once"></span>
                   <span className="font-mono text-xs font-bold text-slate-200">{table.name}</span>
                 </div>
                 

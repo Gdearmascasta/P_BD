@@ -20,6 +20,31 @@
   --animate-glow: glow 2s ease-in-out infinite alternate;
 }
 
+/* Non-infinite variants to avoid repeated visual jank on re-renders */
+@keyframes pulse {
+  0% { opacity: 1; transform: none; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+@keyframes ping {
+  0% { transform: scale(1); opacity: 1; }
+  75% { transform: scale(2); opacity: 0; }
+  100% { transform: scale(2); opacity: 0; }
+}
+
+.animate-pulse-once {
+  animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) 1;
+}
+
+.animate-pulse-fast-once {
+  animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) 1;
+}
+
+.animate-ping-once {
+  animation: ping 1s cubic-bezier(0, 0, 0.2, 1) 1;
+}
+
 @utility glass-card {
   background-color: rgba(7, 12, 23, 0.6);
   backdrop-filter: blur(12px);
