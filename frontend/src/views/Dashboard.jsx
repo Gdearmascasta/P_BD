@@ -27,45 +27,9 @@ export default function Dashboard() {
   const { kpis, zoneStats, sensorComparison, fetchInitialData, loading } = useSCADAStore();
 
   useEffect(() => {
+    // Fetch initial data once on mount. Removed auto-polling to avoid perceived "refresh" effects.
     fetchInitialData();
-
-    // Auto refresh telemetry every 10 seconds (SCADA simulation!)
-    // Only poll when the page is visible to avoid perceived "refreshes" when tab is hidden
-    let intervalId = null;
-
-    const startPolling = () => {
-      if (intervalId) return;
-      intervalId = setInterval(() => {
-        if (typeof document === 'undefined' || document.visibilityState === 'visible') {
-          fetchInitialData();
-        }
-      }, 10000);
-    };
-
-    const stopPolling = () => {
-      if (intervalId) {
-        clearInterval(intervalId);
-        intervalId = null;
-      }
-    };
-
-    const handleVisibility = () => {
-      if (document.visibilityState === 'visible') startPolling();
-      else stopPolling();
-    };
-
-    if (typeof document !== 'undefined') {
-      if (document.visibilityState === 'visible') startPolling();
-      document.addEventListener('visibilitychange', handleVisibility);
-    } else {
-      // fallback if document not available
-      startPolling();
-    }
-
-    return () => {
-      stopPolling();
-      if (typeof document !== 'undefined') document.removeEventListener('visibilitychange', handleVisibility);
-    };
+    return () => {};
   }, []);
 
   // Animaciones GSAP eliminadas — el render ahora es estático y sin efectos.
