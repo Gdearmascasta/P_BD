@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: scada-web
+    env: docker
+    plan: starter
+    dockerfilePath: Dockerfile
+    autoDeploy: true
+    instanceCount: 1
+    buildCommand: ""
+    startCommand: "uvicorn backend.app.main:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: scada-db
+
+databases:
+  - name: scada-db
+    engine: postgresql
+    version: "15"
+    plan: starter

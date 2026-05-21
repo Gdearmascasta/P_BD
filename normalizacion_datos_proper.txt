@@ -1,0 +1,58 @@
+
+====================================================
+SHEET: Indormacion  (File: xl/worksheets/sheet1.xml)
+====================================================
+Row 04 | B4: id_zona <-- Todos los atributos  |  F4: id_medicion
+Row 06 | F6: fecha
+Row 07 | B7: nombre  CC edad
+Row 08 | B8: SENSOR  |  F8: hora
+Row 09 | B9: id_sensor  |  F9: Relaciones entre tablas
+Row 11 | B11: codigo_sensor  |  F11: SENSOR — MEDICION
+Row 13 | B13: nombre_sensor  |  F13: hora
+Row 14 | B14: modelo  |  F14: Tipo: Uno a muchos (1:N)
+Row 15 | B15: ZONA
+Row 16 | B16: id_zona  |  F16: Un sensor puede generar muchas mediciones, pero cada medición pertenece a un solo sensor.
+Row 18 | F18: hora
+Row 19 | B19: nombre_zona  |  F19: ZONA — MEDICION
+Row 21 | B21: temp_ambiente  |  F21: Una zona puede tener muchas mediciones registradas, pero cada medición pertenece a una sola zona.
+Row 22 | B22: humedad_ambiente
+Row 23 | B23: ENCARGADO  |  F23: hora
+Row 24 | B24: id_encargado  |  F24: ENCARGADO — MEDICION
+Row 26 | B26: CC
+Row 28 | B28: nombre
+Row 29 | B29: edad
+Row 30 | B30: MEDICION
+Row 32 | B32: Un encargado puede supervisar muchas mediciones, pero cada medición tiene un solo encargado responsable.
+Row 33 | B33: id_encargado
+Row 34 | B34: nombre_sensor
+Row 35 | B35: temp_ambiente
+
+====================================================
+SHEET: Normalización (File: xl/worksheets/sheet2.xml)
+====================================================
+Row 02 | B2: 1 FN: Identificación Tablas y Campos
+Row 03 | B3: Tabla  |  C3: Campos
+Row 04 | B4: DFT (dependencia funcional transitiva)  |  C4: Medida
+Row 05 | B5: Encargado  |  C5: id_encargado, nombre, CC, edad
+Row 06 | B6: Zona  |  C6: codigo_sensor <-- Todos los atributos
+Row 07 | B7: Sensor  |  C7: id_medicion <--  Todos los atributos
+Row 11 | D11: campos fuertes
+Row 12 | B12: 2 FN: dependencias funcionales  |  D12: DFD (Llave primaria)  |  E12: no olvidar al final las llaves foráneas
+Row 13 | B13: Tabla  |  C13: Campos
+Row 14 | B14: DFT (dependencia funcional transitiva)  |  C14: id_zona, codigo_zona, nombre_zona,             temp_ambiente, humedad_ambiente  |  D14: id_encargado,
+Row 15 | B15: Encargado  |  C15: id_medicion  |  D15: nombre, CC, edad
+Row 16 | B16: Zona  |  C16: codigo_sensor  |  D16: valor_temperatura valor_humedad
+Row 17 | B17: Sensor  |  C17: nombre_sensor  modelo  |  D17: Un tipo de medida clasifica muchas mediciones, pero cada medición pertenece a un solo tipo (temperatura o humedad).
+Row 20 | B20: 3 FN: Eliminar DFT y Realizar relaciones
+Row 21 | B21: Las DFT se eliminan, creando tablas nuevas
+Row 22 | B22: Al crear la relaciones se debe verficar cardinalidad, tipo de relación
+Row 24 | B24: 4 FN: Romper Relaciones M:N
+Row 25 | B25: Las relaciones Muchos a Muchos se eliminan creando tablas intermedias entre las tablas implicadas en la relación muchos a muchos y
+
+====================================================
+SHEET: BD en  3FN (File: xl/worksheets/sheet3.xml)
+====================================================
+Row 02 | C2: DFT (dependencia funcional transitiva)  |  F2: Encargado  |  I2: Zona
+Row 03 | C3: id_encargado <-- Todos los atributos  |  F3: ,nombre_sensor, modelo  |  I3: TIPO_MEDIDA — MEDICION
+Row 12 | F12: Sensor
+Row 13 | F13: codigo_sensor

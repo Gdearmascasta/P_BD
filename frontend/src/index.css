@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --color-cyber-950: #02040a;
+  --color-cyber-900: #070c17;
+  --color-cyber-800: #0e182c;
+  --color-cyber-700: #1b2a47;
+  --color-cyber-primary: #10b981;
+  --color-cyber-secondary: #22d3ee;
+  --color-cyber-warning: #f59e0b;
+  --color-cyber-danger: #f43f5e;
+  --color-cyber-purple: #a855f7;
+
+  --font-sans: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  --animate-pulse-fast: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-glow: glow 2s ease-in-out infinite alternate;
+}
+
+@utility glass-card {
+  background-color: rgba(7, 12, 23, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(14, 24, 44, 0.8);
+  border-radius: 0.75rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.55);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@utility glass-card-hover {
+  &:hover {
+    border-color: rgba(27, 42, 71, 0.8);
+    background-color: rgba(7, 12, 23, 0.8);
+    box-shadow: 0 20px 25px -5px rgba(8, 47, 73, 0.2), 0 25px 50px -12px rgba(0, 0, 0, 0.55);
+  }
+}
+
+@utility glow-text-primary {
+  text-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+}
+
+@utility glow-text-secondary {
+  text-shadow: 0 0 10px rgba(34, 211, 238, 0.4);
+}
+
+@utility glow-border-primary {
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.15);
+}
+
+@utility terminal-input {
+  background-color: rgba(2, 4, 10, 0.95);
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  color: #22d3ee;
+  border: 1px solid #0e182c;
+  border-radius: 0.25rem;
+  padding: 0.5rem 0.75rem;
+  transition: all 0.3s;
+  &:focus {
+    outline: none;
+    border-color: #22d3ee;
+    box-shadow: 0 0 0 1px #22d3ee;
+  }
+}
+
+body {
+  background-color: var(--color-cyber-950);
+  color: #f1f5f9;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.05) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(34, 211, 238, 0.05) 0px, transparent 50%);
+}
+
+/* Custom high-tech scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background-color: var(--color-cyber-950);
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-cyber-800);
+  border-radius: 9999px;
+  transition: background-color 0.3s;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-cyber-700);
+}
+
+/* Animations for SVG ERD Lines */
+@keyframes dash {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+.animated-connector {
+  stroke-dasharray: 5;
+  animation: dash 1s linear infinite;
+}

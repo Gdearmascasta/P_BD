@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.pytest_cache/
+.venv/
+env/
+venv/
+sensors_local.db
+sensors_local.db-journal
+
+# Node / Frontend
+node_modules/
+dist/
+.eslintcache
+*.log
+
+# IDEs
+.vscode/
+.idea/
+.DS_Store

@@ -1,0 +1,112 @@
+Sheets in Workbook: [('Indormacion ', '5', 'rId1'), ('Normalización', '1', 'rId2'), ('BD en  3FN', '6', 'rId3')]
+
+====================================================
+SHEET: Indormacion  (xl/worksheets/sheet1.xml)
+====================================================
+Row 4: B4: id_zona <-- Todos los atributos | F4: id_medicion
+Row 5: B5: 
+Row 6: B6:  | F6: fecha
+Row 7: B7: nombre
+ CC
+edad | F7: 
+Row 8: B8: SENSOR | F8: hora
+Row 9: B9: id_sensor | F9: Relaciones entre tablas
+Row 11: B11: codigo_sensor | F11: SENSOR — MEDICION
+Row 12: B12:  | F12: 
+Row 13: B13: nombre_sensor | F13: hora
+Row 14: B14: modelo | F14: Tipo: Uno a muchos (1:N)
+Row 15: B15: ZONA
+Row 16: B16: id_zona | F16: Un sensor puede generar muchas mediciones, pero cada medición pertenece a un solo sensor.
+Row 17: F17: 
+Row 18: F18: hora
+Row 19: B19: nombre_zona | F19: ZONA — MEDICION
+Row 20: B20: 
+Row 21: B21: temp_ambiente | F21: Una zona puede tener muchas mediciones registradas, pero cada medición pertenece a una sola zona.
+Row 22: B22: humedad_ambiente | F22: 
+Row 23: B23: ENCARGADO | F23: hora
+Row 24: B24: id_encargado | F24: ENCARGADO — MEDICION
+Row 26: B26: CC
+Row 27: B27: 
+Row 28: B28: nombre
+Row 29: B29: edad
+Row 30: B30: MEDICION
+Row 31: B31: 
+Row 32: B32: Un encargado puede supervisar muchas mediciones, pero cada medición tiene un solo encargado responsable.
+Row 33: B33: id_encargado 
+Row 34: B34: nombre_sensor
+Row 35: B35: temp_ambiente
+
+
+====================================================
+SHEET: Normalización (xl/worksheets/sheet1.xml)
+====================================================
+Row 4: B4: id_zona <-- Todos los atributos | F4: id_medicion
+Row 5: B5: 
+Row 6: B6:  | F6: fecha
+Row 7: B7: nombre
+ CC
+edad | F7: 
+Row 8: B8: SENSOR | F8: hora
+Row 9: B9: id_sensor | F9: Relaciones entre tablas
+Row 11: B11: codigo_sensor | F11: SENSOR — MEDICION
+Row 12: B12:  | F12: 
+Row 13: B13: nombre_sensor | F13: hora
+Row 14: B14: modelo | F14: Tipo: Uno a muchos (1:N)
+Row 15: B15: ZONA
+Row 16: B16: id_zona | F16: Un sensor puede generar muchas mediciones, pero cada medición pertenece a un solo sensor.
+Row 17: F17: 
+Row 18: F18: hora
+Row 19: B19: nombre_zona | F19: ZONA — MEDICION
+Row 20: B20: 
+Row 21: B21: temp_ambiente | F21: Una zona puede tener muchas mediciones registradas, pero cada medición pertenece a una sola zona.
+Row 22: B22: humedad_ambiente | F22: 
+Row 23: B23: ENCARGADO | F23: hora
+Row 24: B24: id_encargado | F24: ENCARGADO — MEDICION
+Row 26: B26: CC
+Row 27: B27: 
+Row 28: B28: nombre
+Row 29: B29: edad
+Row 30: B30: MEDICION
+Row 31: B31: 
+Row 32: B32: Un encargado puede supervisar muchas mediciones, pero cada medición tiene un solo encargado responsable.
+Row 33: B33: id_encargado 
+Row 34: B34: nombre_sensor
+Row 35: B35: temp_ambiente
+
+
+====================================================
+SHEET: BD en  3FN (xl/worksheets/sheet1.xml)
+====================================================
+Row 4: B4: id_zona <-- Todos los atributos | F4: id_medicion
+Row 5: B5: 
+Row 6: B6:  | F6: fecha
+Row 7: B7: nombre
+ CC
+edad | F7: 
+Row 8: B8: SENSOR | F8: hora
+Row 9: B9: id_sensor | F9: Relaciones entre tablas
+Row 11: B11: codigo_sensor | F11: SENSOR — MEDICION
+Row 12: B12:  | F12: 
+Row 13: B13: nombre_sensor | F13: hora
+Row 14: B14: modelo | F14: Tipo: Uno a muchos (1:N)
+Row 15: B15: ZONA
+Row 16: B16: id_zona | F16: Un sensor puede generar muchas mediciones, pero cada medición pertenece a un solo sensor.
+Row 17: F17: 
+Row 18: F18: hora
+Row 19: B19: nombre_zona | F19: ZONA — MEDICION
+Row 20: B20: 
+Row 21: B21: temp_ambiente | F21: Una zona puede tener muchas mediciones registradas, pero cada medición pertenece a una sola zona.
+Row 22: B22: humedad_ambiente | F22: 
+Row 23: B23: ENCARGADO | F23: hora
+Row 24: B24: id_encargado | F24: ENCARGADO — MEDICION
+Row 26: B26: CC
+Row 27: B27: 
+Row 28: B28: nombre
+Row 29: B29: edad
+Row 30: B30: MEDICION
+Row 31: B31: 
+Row 32: B32: Un encargado puede supervisar muchas mediciones, pero cada medición tiene un solo encargado responsable.
+Row 33: B33: id_encargado 
+Row 34: B34: nombre_sensor
+Row 35: B35: temp_ambiente
+

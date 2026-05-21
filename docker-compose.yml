@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  # 1. PostgreSQL Database Container
+  db:
+    image: postgres:15-alpine
+    container_name: scada_postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: scada_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d scada_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # 2. Integrated FastAPI + React Application Server
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: scada_web_app
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      # Asyncpg PostgreSQL connection URL
+      - DATABASE_URL=postgresql+asyncpg://postgres:password123@db:5432/scada_db
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:
