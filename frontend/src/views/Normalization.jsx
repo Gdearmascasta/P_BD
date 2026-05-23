@@ -16,32 +16,33 @@ export default function Normalization() {
         { name: 'ENCARGADO', cols: ['id_encargado', 'nombre', 'CC', 'edad'] },
         { name: 'ZONA', cols: ['id_zona', 'codigo_zona', 'nombre_zona', 'temp_ambiente', 'humedad_ambiente'] },
         { name: 'SENSOR', cols: ['id_sensor', 'codigo_sensor', 'nombre_sensor', 'modelo', 'id_zona'] },
-        { name: 'MEDIDA', cols: ['id_medicion', 'fecha', 'hora', 'valor_temperatura', 'valor_humedad', 'id_sensor', 'id_zona', 'id_encargado', 'tipo_medida'] },
-        { name: 'TIPO_MEDIDA (opcional)', cols: ['id_tipo_medida', 'descripcion'] }
+        { name: 'MEDIDA', cols: ['id_medicion', 'fecha', 'hora', 'valor_temperatura', 'valor_humedad', 'id_sensor', 'id_zona', 'id_encargado'] }
       ],
       explanation: 'Listado completo de tablas y campos según la primera forma solicitada.'
     },
     {
       title: 'Segunda Forma (2FN)',
-      desc: 'Identificación de llaves primarias y verificación de dependencias transitivas.',
-      alert: 'Se marcan las PK y se indica ausencia de dependencias transitivas si aplica.',
+      desc: 'Repetición de las mismas tablas de 1FN pero indicando las llaves primarias (PK).',
+      alert: 'Se muestran las mismas tablas que en 1FN y se señalan las PK.',
       tables: [
-        { name: 'ENCARGADO', cols: ['PK id_encargado'] },
-        { name: 'ZONA', cols: ['PK id_zona'] },
-        { name: 'SENSOR', cols: ['PK id_sensor'] },
-        { name: 'MEDIDA', cols: ['PK id_medicion'] },
-        { name: 'TIPO_MEDIDA', cols: ['PK id_tipo_medida'] }
+        { name: 'ENCARGADO', cols: ['id_encargado [PK]', 'nombre', 'CC', 'edad'] },
+        { name: 'ZONA', cols: ['id_zona [PK]', 'codigo_zona', 'nombre_zona', 'temp_ambiente', 'humedad_ambiente'] },
+        { name: 'SENSOR', cols: ['id_sensor [PK]', 'codigo_sensor', 'nombre_sensor', 'modelo', 'id_zona'] },
+        { name: 'MEDIDA', cols: ['id_medicion [PK]', 'fecha', 'hora', 'valor_temperatura', 'valor_humedad', 'id_sensor', 'id_zona', 'id_encargado'] }
       ],
-      explanation: 'PKs identificadas. Observación: No se detectan dependencias funcionales transitivas en el diseño actual; por tanto, NO existen DFT que requieran crear tablas adicionales.'
+      explanation: 'Mismas tablas de la 1FN con las PK claramente identificadas. Observación: no se detectan dependencias transitivas que requieran nuevas tablas.'
     },
     {
       title: 'Tercera Forma (3FN)',
-      desc: 'Confirmación de ausencia de transitivas, relaciones 1:N hacia MEDIDA y definición de llaves foráneas.',
-      alert: 'No se crean nuevas tablas por transitividad. Se definen relaciones 1:N y FKs.',
+      desc: 'Tablas completas con sus llaves primarias y foráneas (PK y FK).',
+      alert: 'Se muestran las tablas finales con PK y FK; no se crean tablas adicionales por transitividad.',
       tables: [
-        { name: 'MEDIDA (Resumen FKs)', cols: ['id_medicion [PK]', 'id_sensor [FK] -> SENSOR(id_sensor)', 'id_zona [FK] -> ZONA(id_zona)', 'id_encargado [FK] -> ENCARGADO(id_encargado)', 'tipo_medida [FK] -> TIPO_MEDIDA(id_tipo_medida)'] }
+        { name: 'ENCARGADO', cols: ['id_encargado [PK]', 'CC', 'nombre', 'edad'] },
+        { name: 'ZONA', cols: ['id_zona [PK]', 'codigo_zona', 'nombre_zona', 'temp_ambiente', 'humedad_ambiente'] },
+        { name: 'SENSOR', cols: ['id_sensor [PK]', 'codigo_sensor', 'nombre_sensor', 'modelo', 'id_zona [FK] -> ZONA(id_zona)'] },
+        { name: 'MEDIDA', cols: ['id_medicion [PK]', 'fecha', 'hora', 'valor_temperatura', 'valor_humedad', 'id_sensor [FK] -> SENSOR(id_sensor)', 'id_zona [FK] -> ZONA(id_zona)', 'id_encargado [FK] -> ENCARGADO(id_encargado)'] }
       ],
-      explanation: 'No hay dependencias transitivas que obliguen a crear tablas nuevas. Relaciones 1:N: SENSOR→MEDIDA, ZONA→MEDIDA, ENCARGADO→MEDIDA, TIPO_MEDIDA→MEDIDA. No hay relaciones M:N por lo tanto NO aplica 4FN.'
+      explanation: 'Modelo en 3FN: tablas completas con PKs y FKs. Relaciones 1:N: SENSOR→MEDIDA, ZONA→MEDIDA, ENCARGADO→MEDIDA. No aplica 4FN (no hay M:N).'
     }
   ];
 
