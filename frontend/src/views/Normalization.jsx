@@ -9,72 +9,39 @@ export default function Normalization() {
 
   const steps = [
     {
-      title: 'Forma No Normal (0NF)',
-      desc: 'El log de lecturas contiene redundancia masiva de datos en cada registro.',
-      alert: 'Redundancia masiva de nombres de zonas, responsables y modelos de sensores.',
+      title: 'Primera Forma (1FN)',
+      desc: 'Identificación de tablas y campos: listar todas las tablas y sus atributos.',
+      alert: 'Se listan todas las tablas y campos de cada tabla.',
       tables: [
-        {
-          name: 'Registro Total Único (Log Raw)',
-          cols: ['Medición ID', 'Fecha', 'Hora', 'Temp.', 'Hum.', 'Cod. Sensor', 'Nombre Sensor', 'Modelo', 'Zona ID', 'Nombre Zona', 'Ref Temp', 'Encargado CC', 'Nombre Encargado']
-        }
+        { name: 'ENCARGADO', cols: ['id_encargado', 'nombre', 'CC', 'edad'] },
+        { name: 'ZONA', cols: ['id_zona', 'codigo_zona', 'nombre_zona', 'temp_ambiente', 'humedad_ambiente'] },
+        { name: 'SENSOR', cols: ['id_sensor', 'codigo_sensor', 'nombre_sensor', 'modelo', 'id_zona'] },
+        { name: 'MEDIDA', cols: ['id_medicion', 'fecha', 'hora', 'valor_temperatura', 'valor_humedad', 'id_sensor', 'id_zona', 'id_encargado', 'tipo_medida'] },
+        { name: 'TIPO_MEDIDA (opcional)', cols: ['id_tipo_medida', 'descripcion'] }
       ],
-      explanation: 'Cada vez que el sensor DTH11 toma una lectura de 22.6°C en el Laboratorio de Mecatrónica, se duplica el nombre del sensor, el modelo, las temperaturas de setpoint del laboratorio, y la cédula, edad y nombre del encargado responsable Yesid Ávila en el disco duro. Esto es inaceptable para almacenamiento a gran escala.'
+      explanation: 'Listado completo de tablas y campos según la primera forma solicitada.'
     },
     {
-      title: 'Primera Forma Normal (1NF)',
-      desc: 'Eliminación de grupos repetitivos y establecimiento de columnas atómicas con Claves Primarias.',
-      alert: 'Se definen claves primarias exactas para cada fila. No hay celdas con valores múltiples.',
+      title: 'Segunda Forma (2FN)',
+      desc: 'Identificación de llaves primarias y verificación de dependencias transitivas.',
+      alert: 'Se marcan las PK y se indica ausencia de dependencias transitivas si aplica.',
       tables: [
-        {
-          name: 'Lectura Atómica (1NF)',
-          cols: ['id_medicion [PK]', 'fecha', 'hora', 'valor_temperatura', 'valor_humedad', 'codigo_sensor', 'nombre_sensor', 'modelo', 'id_zona', 'nombre_zona', 'temp_ambiente', 'cc_encargado', 'nombre_encargado']
-        }
+        { name: 'ENCARGADO', cols: ['PK id_encargado'] },
+        { name: 'ZONA', cols: ['PK id_zona'] },
+        { name: 'SENSOR', cols: ['PK id_sensor'] },
+        { name: 'MEDIDA', cols: ['PK id_medicion'] },
+        { name: 'TIPO_MEDIDA', cols: ['PK id_tipo_medida'] }
       ],
-      explanation: 'En esta etapa se garantiza que cada celda contenga un único valor indivisible (atómico), eliminando cualquier arreglo de datos o listas internas, y se establece un identificador único global para la medición (id_medicion).'
+      explanation: 'PKs identificadas. Observación: No se detectan dependencias funcionales transitivas en el diseño actual; por tanto, NO existen DFT que requieran crear tablas adicionales.'
     },
     {
-      title: 'Segunda Forma Normal (2NF)',
-      desc: 'Eliminación de dependencias parciales sobre la clave primaria.',
-      alert: 'Atributos no clave deben depender de la Clave Primaria en su totalidad.',
+      title: 'Tercera Forma (3FN)',
+      desc: 'Confirmación de ausencia de transitivas, relaciones 1:N hacia MEDIDA y definición de llaves foráneas.',
+      alert: 'No se crean nuevas tablas por transitividad. Se definen relaciones 1:N y FKs.',
       tables: [
-        {
-          name: 'Tabla: SENSOR',
-          cols: ['codigo_sensor [PK]', 'nombre_sensor', 'modelo']
-        },
-        {
-          name: 'Tabla: ZONA',
-          cols: ['id_zona [PK]', 'nombre_zona', 'temp_ambiente', 'humedad_ambiente']
-        },
-        {
-          name: 'Tabla: LECTURA_TEMPORAL (2NF)',
-          cols: ['id_medicion [PK]', 'fecha', 'hora', 'valor_temperatura', 'valor_humedad', 'codigo_sensor [FK]', 'id_zona [FK]', 'cc_encargado', 'nombre_encargado']
-        }
+        { name: 'MEDIDA (Resumen FKs)', cols: ['id_medicion [PK]', 'id_sensor [FK] -> SENSOR(id_sensor)', 'id_zona [FK] -> ZONA(id_zona)', 'id_encargado [FK] -> ENCARGADO(id_encargado)', 'tipo_medida [FK] -> TIPO_MEDIDA(id_tipo_medida)'] }
       ],
-      explanation: 'Los campos nombre_sensor y modelo dependen funcionalmente de codigo_sensor, no de la medición. Del mismo modo, nombre_zona depende de id_zona. Se crean las entidades independientes SENSOR y ZONA, dejando llaves foráneas [FK] en la tabla de mediciones.'
-    },
-    {
-      title: 'Tercera Forma Normal (3NF) - Lógico Final',
-      desc: 'Eliminación de dependencias transitivas. Estructura de producción óptima.',
-      alert: 'Ningún atributo depende de forma transitiva de la clave primaria a través de otro atributo.',
-      tables: [
-        {
-          name: 'Tabla: ENCARGADO',
-          cols: ['id_encargado [PK]', 'cc [Unique]', 'nombre', 'edad']
-        },
-        {
-          name: 'Tabla: ZONA',
-          cols: ['id_zona [PK]', 'nombre_zona', 'temp_ambiente', 'humedad_ambiente']
-        },
-        {
-          name: 'Tabla: SENSOR',
-          cols: ['codigo_sensor [PK]', 'nombre_sensor', 'modelo']
-        },
-        {
-          name: 'Tabla: MEDIDA',
-          cols: ['id_medicion [PK]', 'fecha', 'hora', 'valor_temperatura', 'valor_humedad', 'codigo_sensor [FK]', 'id_zona [FK]', 'id_encargado [FK]']
-        }
-      ],
-      explanation: 'El nombre y la edad del responsable dependen directamente de cc_encargado, no del id_medicion. Al crear la tabla ENCARGADO, eliminamos esta transitividad. Esta es la base final del SCADA, libre de anomalías de inserción, actualización o borrado.'
+      explanation: 'No hay dependencias transitivas que obliguen a crear tablas nuevas. Relaciones 1:N: SENSOR→MEDIDA, ZONA→MEDIDA, ENCARGADO→MEDIDA, TIPO_MEDIDA→MEDIDA. No hay relaciones M:N por lo tanto NO aplica 4FN.'
     }
   ];
 
